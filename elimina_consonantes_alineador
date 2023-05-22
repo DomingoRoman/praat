@@ -1,0 +1,46 @@
+# Roman, Domingo y Muñoz Diana
+# 2023
+# Laboratorio de Fonética USAC
+
+
+# Este script opera sobre el alineador forzado de Praat.
+# Una vez ejecutado el alineador, este script elimina las marcas
+# que no son vocales y agrega una capa de punto en el centro de cada vocal
+
+
+sonido = selected("Sound")
+tg = selected("TextGrid")
+
+
+select tg
+
+ene_sonidos = Get number of intervals: 3
+
+for i to ene_sonidos
+	select tg
+	etiqueta$ = Get label of interval: 3, i
+
+	if etiqueta$ <> "a" and etiqueta$ <> "e" and etiqueta$ <> "i" and etiqueta$ <> "o" and etiqueta$ <> "u"
+		Set interval text: 3, i, "" 
+	endif
+endfor
+
+
+pauseScript: "Arregle el mundo, Diana"
+
+Insert point tier: 4, ""
+
+
+for i to ene_sonidos
+	select tg
+	etiqueta$ = Get label of interval: 3, i
+	if etiqueta$ <> ""
+		fin = Get end time of interval: 3, i
+		ini = Get start time of interval: 3, i
+		dur = fin-ini
+		dur_partido_por_dos = dur/2
+		tiempo_medio = ini + dur_partido_por_dos
+		Insert point: 4, tiempo_medio, etiqueta$
+		
+	endif
+endfor
