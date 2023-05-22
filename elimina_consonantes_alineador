@@ -1,16 +1,29 @@
-# Roman, Domingo y Muñoz Diana
-# 2023
-# Laboratorio de Fonética USAC
+# Román, Domingo y Muñoz Diana
+# 2023, mayo
+# Laboratorio de Fonética USACH
+# Versión 2. 
 
 
-# Este script opera sobre el alineador forzado de Praat.
+# Este script opera a partir del alineador forzado de Praat.
 # Una vez ejecutado el alineador, este script elimina las marcas
-# que no son vocales y agrega una capa de punto en el centro de cada vocal
+# que no son vocales (en el estrato 3).
+# Agrega un cuarto estrato de punto y en él marca cada vocal en el centro
+# Guarda el TextGrid en el directorio seleccionado.
 
+# https://github.com/DomingoRoman/praat/blob/main/elimina_consonantes_alineador
+
+directorio$ = chooseDirectory$ ("Elija directorio para el TextGrid")
+
+numero_sonido_seleccionado = numberOfSelected("Sound")
+numero_tgrid_seleccionado = numberOfSelected("TextGrid")
+
+if numero_sonido_seleccionado <> 1 or numero_tgrid_seleccionado <> 1
+	writeInfoLine: "Debe tener seleccionado un TextGrid y el audio correspondiente"
+endif
 
 sonido = selected("Sound")
+sonido$ = selected$("Sound")
 tg = selected("TextGrid")
-
 
 select tg
 
@@ -41,6 +54,9 @@ for i to ene_sonidos
 		dur_partido_por_dos = dur/2
 		tiempo_medio = ini + dur_partido_por_dos
 		Insert point: 4, tiempo_medio, etiqueta$
-		
 	endif
 endfor
+
+
+tg_extensi$ = ".TextGrid"
+Save as text file... 'directorio$'/'sonido$''tg_extensi$'
