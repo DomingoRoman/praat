@@ -1,0 +1,38 @@
+sn = selected("Sound")
+sn$ = selected$("Sound")
+tg = To TextGrid: "1", ""
+
+if sn$ == "01"
+	duracion_total = Get total duration
+	dur_9 = duracion_total/9
+	Insert boundary: 1, dur_9
+	Insert boundary: 1, duracion_total-dur_9
+	Set interval text: 1, 2, "Juanito tiene papas"
+endif
+
+plus sn
+View & Edit
+
+pauseScript: "Edite límites y corra el alineador forzado"
+
+select tg
+ene_sonidos = Get number of intervals: 3
+
+
+Insert point tier: 4, "dentales"
+
+
+for i to ene_sonidos
+	etiq$ = Get label of interval: 3, i
+	if etiq$ == "t" or etiq$ == "d" or etiq$ =="ð"
+		fin = Get end time of interval: 3, i
+		ini = Get start time of interval: 3, i
+		dur = fin-ini
+		medio = ini + (dur/2)
+		appendInfoLine: etiq$,tab$, medio
+		Insert point: 4, medio, etiq$
+	endif
+
+endfor
+
+selectObject: "TextGrid 01"
